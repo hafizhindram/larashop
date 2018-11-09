@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Category;
 use Session;
 
@@ -16,6 +17,12 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware(function($request, $next){
+            if(Gate::allows('manage-categories')) return $next($request);
+
+            abort(403, 'Anda tidak memiliki cukup hak akases');
+        });
     }
     
     /**
@@ -53,6 +60,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+             $this->validate ($request, array(
+            'name'=>'required|min:5|max:100',
+            'image'=>'required'
+            ));
+
             $name = $request->get('name');
 
             $new_category = new Category;
@@ -111,7 +124,8 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, array(
-            'name'=>'required'
+            'name'=>'required',
+            'slug' => ['required', Rule::unique('categories')->ignore($category->slug, 'slug')]
         ));
 
         $name = $request->get('name');

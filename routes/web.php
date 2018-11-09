@@ -29,6 +29,8 @@ Route::get('/books/{id}/restore', 'BookController@restore')->name('books.restore
 Route::get('books/trash', 'BookController@trash')->name('books.trash');
 Route::resource('books', 'BookController');
 
+Route::resource('orders', 'OrderController');
+
 Auth::routes();
 Route::match(["GET", "POST"], "/register", function(){
  return redirect("/login");

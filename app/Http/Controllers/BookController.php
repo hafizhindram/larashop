@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Book;
 use App\Category;
 use Session;
@@ -18,6 +19,12 @@ class BookController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware(function($request, $next){
+            if(Gate::allows('manage-books')) return $next($request);
+
+            abort(403, 'Anda tidak memiliki cukup hak akases');
+        });
     }
 
     /**
@@ -63,6 +70,15 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+         $this->validate ($request, array(
+            'title'=>'required|min:5|max:100',
+            'description'=>'"required|min:20|max:1000',
+            'author'=>'required|min:3|max:100',
+            'publisher'=>'required|min:3|max:191',
+            'price'=>'required|digits_between:0,10',
+            'stock' => 'required|digits_between:0,10',
+        ));
+
         $new_book = new Book;
         $new_book->title = $request->get('title');
         $new_book->cover = $request->get('cover');
@@ -127,6 +143,17 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request, array(
+            'title'=>'required|min:5|max:191',
+            'slug' => ['required', Rule::unique('books')->ignore($books->slug, 'slug')],
+            'description' => 'required|min:20|max:1000',
+            'author' => 'required|min:3|max:100',
+            'publisher' => 'required|min:3|max:191',
+            'price' => 'required|digits_between:0,10',
+            'stock' => 'required|digits_between:0,10'
+        ));
+
         $book = Book::findOrFail($id);
 
         $book->title = $request->get('title');
