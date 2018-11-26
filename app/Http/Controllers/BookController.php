@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use App\Book;
 use App\Category;
 use Session;
@@ -143,10 +144,10 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $book = Book::findOrFail($id);
 
         $this->validate($request, array(
             'title'=>'required|min:5|max:191',
-            'slug' => ['required', Rule::unique('books')->ignore($books->slug, 'slug')],
             'description' => 'required|min:20|max:1000',
             'author' => 'required|min:3|max:100',
             'publisher' => 'required|min:3|max:191',
@@ -154,10 +155,8 @@ class BookController extends Controller
             'stock' => 'required|digits_between:0,10'
         ));
 
-        $book = Book::findOrFail($id);
-
         $book->title = $request->get('title');
-        $book->slug = $request->get('slug');
+        $book->slug = $request->get('title');
         $book->description = $request->get('description');
         $book->author = $request->get('author');
         $book->publisher = $request->get('publisher');

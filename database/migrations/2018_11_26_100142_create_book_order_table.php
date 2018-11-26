@@ -32,10 +32,11 @@ class CreateBookOrderTable extends Migration
      */
     public function down()
     {
-        Schema::table('book_order', function(Blueprint $table){
+         Schema::table('book_order', function(Blueprint $table){
             $table->dropForeign(['order_id']);
             $table->dropForeign(['book_id']);
         });
+        
         Schema::dropIfExists('book_order');
     }
 }

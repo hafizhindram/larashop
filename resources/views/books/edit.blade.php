@@ -24,9 +24,10 @@
 					<br>
 					<input type="file" name="cover" class="form-control">
 					<small class="text-muted">Kosongkan jika tidak ingin mengubah cover</small>
+					<br>
 
 					<label for="slug">Slug</label>
-					<input type="text" name="slug" value="{{$book_edit->slug}}" class="form-control" placeholder="enter-new-slug">
+					<input type="text" name="slug" value="{{$book_edit->slug}}" class="form-control" placeholder="enter-new-slug" disabled>
 					<br>
 
 					<label for="description">Description</label>
