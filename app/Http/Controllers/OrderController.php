@@ -39,6 +39,7 @@ class OrderController extends Controller
         $status = $request->get('status');
         $name = $request->get('name');
 
+
         $orders = Order::with('books')->with('user')
         ->whereHas('user', function($query) use ($name){$query->where('name', 'LIKE', "%$name%");
         })
@@ -54,7 +55,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $judulbuku = Book::all();
+
+        return view('orders.create', compact('judulbuku'));
     }
 
     /**
@@ -121,4 +124,12 @@ class OrderController extends Controller
     {
         //
     }
+
+    // public function ajaxSearch(Request $request){
+    //     $keyword = $request->get('q');
+
+    //     $book = Book::where('title', 'LIKE', "%$keyword%")->get();
+
+    //     return $book;
+    // }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 use App\Book;
 use App\Category;
 use Session;
@@ -73,7 +72,7 @@ class BookController extends Controller
     {
          $this->validate ($request, array(
             'title'=>'required|min:5|max:100',
-            'description'=>'"required|min:20|max:1000',
+            'description'=>'required|min:20|max:1000',
             'author'=>'required|min:3|max:100',
             'publisher'=>'required|min:3|max:191',
             'price'=>'required|digits_between:0,10',
@@ -229,4 +228,5 @@ class BookController extends Controller
             return redirect()->route('books.index');
         }
     }
+
 }

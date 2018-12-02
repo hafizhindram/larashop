@@ -29,6 +29,8 @@ Route::get('/books/{id}/restore', 'BookController@restore')->name('books.restore
 Route::get('books/trash', 'BookController@trash')->name('books.trash');
 Route::resource('books', 'BookController');
 
+Route::get('/ajax/book/search', 'OrderController@ajaxSearch');
+
 Route::resource('orders', 'OrderController');
 
 Auth::routes();

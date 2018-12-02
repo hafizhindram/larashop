@@ -28,6 +28,13 @@
 
 	<div class="row">
 		<div class="col-md-12">
+
+			{{-- <div class="row mb-3">
+				<div class="col-md-12 text-right">
+					<a href="{{route('orders.create')}}" class="btn btn-primary">Create Order</a>
+				</div>
+			</div> --}}
+
 			<table class="table table-bordered table-stripped">
 				<thead>
 					<tr align="center">

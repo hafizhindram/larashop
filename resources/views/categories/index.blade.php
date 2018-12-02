@@ -32,6 +32,13 @@
 
 	<div class="row">
 		<div class="col-md-12">
+
+			<div class="row mb-3">
+				<div class="col-md-12 text-right">
+					<a href="{{route('categories.create')}}" class="btn btn-primary">Create Category</a>
+				</div>
+			</div>
+
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr align="center">
